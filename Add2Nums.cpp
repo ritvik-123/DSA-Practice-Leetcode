@@ -8,125 +8,57 @@
  *     ListNode(int x, ListNode *next) : val(x), next(next) {}
  * };
  */
-class Solution 
-{
+class Solution {
 public:
-    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
-    {
-        ListNode* l3 = new ListNode;
-        ListNode* head = new ListNode;
-        int carryover = 0;
-        ListNode* temp = new ListNode; // for the first l3 node
-        cout<<l1->val + l2->val;
-        temp->val = l1->val+l2->val;
-        if(temp->val <= 9)
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* N1 = l1;
+        ListNode* N2 = l2;
+        ListNode dummy;
+        ListNode* tail = &dummy;
+        int num = 0;
+        int carry = 0;
+        while(N1 != nullptr && N2 != nullptr)
         {
-            l3 = temp;
-            l2 = l2->next;
-            l1 = l1->next;
-            head = l3;
-        }
-        else
-        {
-            carryover = temp->val/10;
-            temp->val = temp->val%10;
-            l3 = temp;
-            l2 = l2->next;
-            l1 = l1->next;
-            head = l3;
-        }
-        while(l1!=NULL && l2!=NULL)
-        {
-            ListNode* temp = new ListNode;
-            temp->val = l1->val+l2->val + carryover;
-            if(temp->val <= 9)
+            num = N1->val + N2->val + carry;
+            carry = num/10;
+            if(num>9)
             {
-                l3->next = temp;
-                l3 = l3->next;
-                l2 = l2->next;
-                l1 = l1->next;
-                carryover = 0;
+                num = num%10;
             }
-            else
-            {
-                carryover = temp->val/10;
-                temp->val = temp->val%10;
-                l3->next = temp;
-                l3 = l3->next;
-                l2 = l2->next;
-                l1 = l1->next;
-            }
+            tail->next = new ListNode(num);
+            tail = tail->next;
+            N1 = N1->next;
+            N2 = N2->next;            
         }
-        if(l1 == NULL)
+        while(N1!=nullptr)
         {
-            while(l2!=NULL)
+            num = N1->val + carry;
+            carry = num/10;
+            if(num>9)
             {
-                if(carryover != 0)
-                {
-                    ListNode* temp = new ListNode;
-                    temp->val = l2->val + carryover;
-                    if(temp->val <= 9)
-                    {
-                        l3->next = temp;
-                        l2 = l2->next;
-                        l3 = l3->next;
-                        carryover = 0;
-                    }
-                    else
-                    {
-                        carryover = temp->val/10;
-                        temp->val = temp->val%10;
-                        l3->next = temp;
-                        l2 = l2->next;
-                        l3 = l3->next;
-                    }
-                }
-                else
-                {
-                    l3->next = l2;
-                    l2 = l2->next;
-                    l3 = l3->next;
-                }
+                num = num%10;
             }
+            tail->next = new ListNode(num);
+            tail = tail->next;
+            N1 = N1->next;
         }
-        if(l2 == NULL)
+        while(N2!=nullptr)
         {
-            while(l1!=NULL)
+            num = N2->val + carry;
+            carry = num/10;
+            if(num>9)
             {
-                if(carryover != 0)
-                {
-                    ListNode* temp = new ListNode;
-                    temp->val = l1->val + carryover;
-                    if(temp->val <= 9)
-                    {
-                        l3->next = temp;
-                        l1 = l1->next;
-                        l3 = l3->next;
-                        carryover = 0;
-                    }
-                    else
-                    {
-                        carryover = temp->val/10;
-                        temp->val = temp->val%10;
-                        l3->next = temp;
-                        l1 = l1->next;
-                        l3 = l3->next;
-                    }
-                }
-                else
-                {
-                    l3->next = l1;
-                    l1 = l1->next;
-                    l3 = l3->next;
-                }
+                num = num%10;
             }
+            tail->next = new ListNode(num);
+            tail = tail->next;
+            N2 = N2->next;
         }
-        if(carryover)
+        if(carry!=0)
         {
-            ListNode* temp = new ListNode;
-            temp->val = carryover;
-            l3->next = temp;
+            tail->next = new ListNode(carry);
+            tail = tail->next;
         }
-        return head;
+        return dummy.next;
     }
 };
