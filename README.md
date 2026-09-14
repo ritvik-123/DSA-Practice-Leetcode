@@ -2,7 +2,7 @@
 This repository is for my DSA practice in LeetCode. Started with Python and currently sticking with C++
 
 ## Current Progress
-Problems Solved: 86 / 4033 <br>
+Problems Solved: 86 / 4055 <br>
 Acceptance Rate: 46.67% <br>
 Hard: 6 <br>
 Medium: 49 <br>
